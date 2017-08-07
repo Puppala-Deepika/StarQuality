@@ -1,0 +1,87 @@
+Dataset used	:	from Amazon
+			http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/ratings_Baby.csv - ratings_Baby.csv(915,446 ratings),
+			http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/ratings_Health_and_Personal_Care.csv - ratings_Health_and_Personal_Care.csv(2,982,326 ratings)
+
+
+
+Star Quality Prediction	:
+				The ratings for a given object are predicted from 
+				statistical metrics - mean, median, lower bound normal, lower bound binomial and 
+				reweighted metric - filter out non prolific authors for each of the statistical metric.
+
+	Code : get_rating.py
+	
+	Input : Reviews of various products from various users
+	Output :	(For ratings_Baby dataset	:	http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/ratings_Baby.csv)
+	
+	mean_Baby.csv						-	Predicted ratings file using mean
+	median_Baby.csv						-	Predicted ratings file using median
+	lower_bound_normal_Baby.csv				-	Predicted ratings file using lower bound normal
+	lower_bound_binomial_Baby.csv				-	Predicted ratings file using lower bound binomial
+	filter_out_non_prolific_authors_mean_Baby.csv		-	Predicted ratings file using mean after removing non prolific authors
+	filter_out_non_prolific_authors_median_Baby.csv		-	Predicted ratings file using median after removing non prolific authors
+	filter_out_non_prolific_lower_bound_normal_Baby.csv	-	Predicted ratings file using lower bound normal after removing non prolific authors
+	filter_out_non_prolific_lower_bound_binomial_Baby.csv	-	Predicted ratings file using lower bound binomial after removing non prolific authors
+	
+	Similarly for dataset ratings_Health_and_Personal_Care.csv	:	http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/ratings_Health_and_Personal_Care.csv
+
+
+
+Evaluation	:
+			Performed as mentioned in the reference paper
+
+	Code : 	evaluation.py
+	
+	Output : (Accuracy)		Baby			Health & Personal Care
+	
+	mean			-	74.44 %			61.59 %
+	median			-	67.22 %			71.45 %
+	lower bound normal	-	54.44 %			59.32 %
+	lower bound binomial	-	61.67 %			64.93 %
+	
+	After removing non-prolific users,
+	
+	mean			-	63.88 %			66.43 %
+	median			-	70.56 %			74.35 %
+	lower bound normal	-	66.11 %			66.04 %
+	lower bound binomial	-	56.67 %			64.88 %
+	
+	
+
+
+--------------------------------------------------	EXTENSION TO PAPER	---------------------------------------------------------------
+
+Helpful reviewers	:
+	
+	Code : 	helpfulness.py
+	
+	Sample output file : weighted_mean_PLG.csv
+	
+	The Estimated ratings can be thought as features of some arbitrary user X.
+	
+	To compute the helpfulness of each user , we can calculate Pearson similarity b\w every user and user X.  (As we do in Collabarative filtering in Recommendation Systems).
+	
+	Pearson Similarity ranges from -1 to +1  
+
+
+	Dataset used : 	reviews	:	http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Patio_Lawn_and_Garden.json.gz
+			metadata:	http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Patio_Lawn_and_Garden.json.gz
+		
+
+Reweighted model ::
+
+	Code : get_rating.ipynb
+
+	modified_rating = ((1+positive_votes) * rating + negative_votes * (6-rating))/(1+total_votes)
+	weight foreach rating = abs(1+positive_votes - negative_votes)
+
+	Final rating for a product = sum(   abs(1+positive_votes-negative_votes) * Modified_rating     ) / sum( abs ( 1 + positive_votes - negative_votes ))  of all reviews for a given product.
+
+
+	Improvement in accuracy compared to base model = (76.88 - 74.44)% = 2.44%
+	Accuracy slightly improved!!!
+
+Additional Work ::
+
+Web Interface is created in data_mining_web_interface folder.
+Web Interface can be started by opening data_mining_webInterface/Flat-UI-master/index.html in browser.

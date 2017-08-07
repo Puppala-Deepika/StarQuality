@@ -1,0 +1,7 @@
+ratings_Baby dataset			:	http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/ratings_Baby.csv
+
+ratings_Health_and_Personal_Care.csv	:	http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/ratings_Health_and_Personal_Care.csv
+
+reviews					:	http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/reviews_Patio_Lawn_and_Garden.json.gz
+
+metadata				:	http://snap.stanford.edu/data/amazon/productGraph/categoryFiles/meta_Patio_Lawn_and_Garden.json.gz
